@@ -21,7 +21,7 @@ public class LogStatisticResponse implements Comparator<LogStatisticResponse> {
 
     @Override
     public int compare(LogStatisticResponse o1, LogStatisticResponse o2) {
-        return Integer.compare(o1.getCount().getRest() + o1.getCount().getCron(),
-                o2.getCount().getRest() + o2.getCount().getCron());
+        return Integer.compare(o2.getCount().getRest() + o2.getCount().getCron(),
+                o1.getCount().getRest() + o1.getCount().getCron());
     }
 }

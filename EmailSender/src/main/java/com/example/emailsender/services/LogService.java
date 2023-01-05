@@ -31,20 +31,36 @@ public class LogService {
             List<LogEntity> usersLog = logRepository.findAllByUser(user);
             List<LogEntity> rest = logRepository.findAllByTypeAndUser(MessageType.REST, user);
             List<LogEntity> cron = logRepository.findAllByTypeAndUser(MessageType.CRON, user);
-            statistic.add(new LogStatisticResponse(
-                    user.getUsername(),
-                    user.getEmail(),
-                    new CountForStatisticResponse(rest.size(), cron.size()),
-                    usersLog.get(0).getCreatedOn().toString(),
-                    usersLog.get(usersLog.size() - 1).getCreatedOn().toString()));
+            fillListWithStatistic(statistic, user, rest.size(), cron.size(), usersLog);
         }
         return sortStatisticPages(statistic, pageNumber);
+    }
+
+    private void fillListWithStatistic(List<LogStatisticResponse> statisticList,
+                                 UserEntity user,
+                                 int restCount,
+                                 int cronCount,
+                                 List<LogEntity> logDate) {
+        if (logDate.size() == 0) {
+            statisticList.add(new LogStatisticResponse(
+                    user.getUsername(),
+                    user.getEmail(),
+                    new CountForStatisticResponse(restCount, cronCount),
+                    null,
+                    null));
+        } else {
+            statisticList.add(new LogStatisticResponse(
+                    user.getUsername(),
+                    user.getEmail(),
+                    new CountForStatisticResponse(restCount, cronCount),
+                    logDate.get(0).getCreatedOn().toString(),
+                    logDate.get(logDate.size() - 1).getCreatedOn().toString()));
+        }
     }
 
     private List<LogStatisticResponse> sortStatisticPages(
             List<LogStatisticResponse> statistic, int pageNumber) {
         Collections.sort(statistic, new LogStatisticResponse());
-        Collections.reverse(statistic);
         PagedListHolder<LogStatisticResponse> page = new PagedListHolder<>(statistic);
         page.setPageSize(PAGE_SIZE);
         page.setPage(pageNumber);
