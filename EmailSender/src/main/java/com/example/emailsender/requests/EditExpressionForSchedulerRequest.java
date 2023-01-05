@@ -1,0 +1,13 @@
+package com.example.emailsender.requests;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+
+@Getter
+public class EditExpressionForSchedulerRequest {
+
+    @NotBlank
+    private String expression;
+    @NotBlank
+    private String subject;
+}

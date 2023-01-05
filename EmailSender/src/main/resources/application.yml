@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    username: vlad
+    password: 1111
+    url: jdbc:postgresql://localhost:5432/postgres
+  liquibase:
+    change-log: db/changelog/db.changelog-master.yml
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: i.vlad.yaushev@gmail.com
+    password: mmjnkxzuucpffynl
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
