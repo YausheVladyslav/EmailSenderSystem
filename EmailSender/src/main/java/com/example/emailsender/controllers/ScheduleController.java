@@ -19,7 +19,7 @@ public class ScheduleController {
     public ResponseEntity<Void> startCron(
             @Valid @RequestBody EditExpressionForSchedulerRequest request
     ) {
-        scheduleService.startSchedule(request.getExpression(), request.getSubject());
+        scheduleService.startSchedule(request.getCronId());
         return ResponseEntity.ok().build();
     }
 
@@ -27,7 +27,7 @@ public class ScheduleController {
     public ResponseEntity<Void> edithCron(
             @Valid @RequestBody EditExpressionForSchedulerRequest request
     ) {
-        scheduleService.editCron(request.getExpression(), request.getSubject());
+        scheduleService.editCron(request.getCronId());
         return ResponseEntity.ok().build();
     }
 }

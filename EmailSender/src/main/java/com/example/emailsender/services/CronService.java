@@ -20,30 +20,28 @@ public class CronService {
 
     private static final int PAGE_SIZE = 5;
 
-    private boolean validCron(String expression) {
-        return CronExpression.isValidExpression(expression);
-    }
-
-    public void createCron(String expression) {
-        if (validCron(expression)) {
-            CronEntity cron = new CronEntity();
-            cron.setExpression(expression);
-            cronRepository.save(cron);
+    private String validCron(String expression) {
+        if (CronExpression.isValidExpression(expression)) {
+            return expression;
         } else {
             throw new RequestException("Expression is not valid");
         }
     }
 
-    public void editCron(int cronId, String newExpression) {
+    public void createCron(String expression) {
+        String newExpression = validCron(expression);
+        CronEntity cron = new CronEntity();
+        cron.setExpression(newExpression);
+        cronRepository.save(cron);
+    }
+
+    public void editCron(int cronId, String expression) {
         Optional<CronEntity> cronEntityById = cronRepository.findById(cronId);
+        String newExpression = validCron(expression);
         if (cronEntityById.isPresent()) {
-            if (validCron(newExpression)) {
                 CronEntity cron = cronEntityById.get();
                 cron.setExpression(newExpression);
                 cronRepository.save(cron);
-            } else {
-                throw new RequestException("Expression is not valid");
-            }
         } else {
             throw new RequestException("Cron by this id: " + cronId + " is no found");
         }

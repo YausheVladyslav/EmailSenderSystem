@@ -38,7 +38,7 @@ public class CronController {
     }
 
     @GetMapping("/cron-list")
-    public ResponseEntity<Page<CronEntity>> usersList(@RequestParam int pageNumber) {
+    public ResponseEntity<Page<CronEntity>> cronList(@RequestParam int pageNumber) {
         return ResponseEntity.ok(cronService.allCrons(pageNumber));
     }
 }
