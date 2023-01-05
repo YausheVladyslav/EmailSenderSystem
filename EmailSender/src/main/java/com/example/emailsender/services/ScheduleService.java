@@ -1,8 +1,9 @@
-package com.example.emailsender.scheduler;
+package com.example.emailsender.services;
 
 import com.example.emailsender.exceptions.RequestException;
 import com.example.emailsender.repositories.LogRepository;
 import com.example.emailsender.repositories.UserRepository;
+import com.example.emailsender.thread.RunSendMail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.TaskScheduler;
@@ -27,7 +28,7 @@ public class ScheduleService {
 
     public void startSchedule(String expression, String subject) {
         scheduler = taskScheduler.schedule(
-                new Thread(new RunSendMail(javaMailSender, userRepository, logRepository, subject)),
+                new Thread(new RunSendMail(javaMailSender, userRepository, logRepository)),
                 createExpression(expression)
         );
     }

@@ -28,7 +28,7 @@ public class UserController {
             @Valid
             @RequestBody AddEditUserRequest userRequest
     ) {
-        userService.EditUser(userId, userRequest.getUsername(), userRequest.getEmail());
+        userService.editUser(userId, userRequest.getUsername(), userRequest.getEmail());
         return ResponseEntity.ok().build();
     }
 

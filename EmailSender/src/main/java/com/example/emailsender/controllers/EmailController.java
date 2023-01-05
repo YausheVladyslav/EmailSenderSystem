@@ -31,6 +31,6 @@ public class EmailController {
     @GetMapping("/statistic")
     public ResponseEntity<List<LogStatisticResponse>> statistic(
             @RequestParam int pageNumber) {
-        return ResponseEntity.ok(logService.emailStatistic(pageNumber));
+        return ResponseEntity.ok(logService.getLogStatistic(pageNumber));
     }
 }

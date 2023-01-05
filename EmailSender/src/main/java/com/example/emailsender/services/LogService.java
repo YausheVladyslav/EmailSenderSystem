@@ -24,7 +24,7 @@ public class LogService {
 
     private static final int PAGE_SIZE = 5;
 
-    public List<LogStatisticResponse> emailStatistic(int pageNumber) {
+    public List<LogStatisticResponse> getLogStatistic(int pageNumber) {
         List<UserEntity> userList = userRepository.findAll();
         List<LogStatisticResponse> statistic = new ArrayList<>();
         for (UserEntity user : userList) {
@@ -38,10 +38,10 @@ public class LogService {
                     usersLog.get(0).getCreatedOn().toString(),
                     usersLog.get(usersLog.size() - 1).getCreatedOn().toString()));
         }
-        return sortForPages(statistic, pageNumber);
+        return sortStatisticPages(statistic, pageNumber);
     }
 
-    private List<LogStatisticResponse> sortForPages(
+    private List<LogStatisticResponse> sortStatisticPages(
             List<LogStatisticResponse> statistic, int pageNumber) {
         Collections.sort(statistic, new LogStatisticResponse());
         Collections.reverse(statistic);
