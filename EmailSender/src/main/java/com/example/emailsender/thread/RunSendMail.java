@@ -1,4 +1,4 @@
-package com.example.emailsender.scheduler;
+package com.example.emailsender.thread;
 
 import com.example.emailsender.entities.LogEntity;
 import com.example.emailsender.entities.UserEntity;
@@ -17,17 +17,16 @@ public class RunSendMail implements Runnable {
     private final UserRepository userRepository;
     private final LogRepository logRepository;
     private static final String SENDER_EMAIL = "senderEmail@gmail.com";
-    private String subject;
+    private static final String SUBJECT = "Вітання!";
 
     public RunSendMail(
             JavaMailSender javaMailSender,
             UserRepository userRepository,
-            LogRepository logRepository,
-            String subject) {
+            LogRepository logRepository
+    ) {
         this.javaMailSender = javaMailSender;
         this.userRepository = userRepository;
         this.logRepository = logRepository;
-        this.subject = subject;
     }
 
     @Transactional
@@ -37,7 +36,7 @@ public class RunSendMail implements Runnable {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         for (UserEntity user : userList) {
             mailMessage.setFrom(SENDER_EMAIL);
-            mailMessage.setSubject(subject);
+            mailMessage.setSubject(SUBJECT);
             mailMessage.setTo(user.getEmail());
             mailMessage.setText("Username: " + user.getUsername() + "\n"
                     + "Date created: " + user.getCreatedOn());

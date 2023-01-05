@@ -23,13 +23,4 @@ public class UserEntity {
     @CreationTimestamp
     private LocalDateTime createdOn;
 
-
-//    @Override
-//    public String toString() {
-//        return "userId=" + userId +
-//                ", username='" + username + '\'' +
-//                ", email='" + email + '\'' +
-//                ", created=" + createdOn;
-//    }
-
 }

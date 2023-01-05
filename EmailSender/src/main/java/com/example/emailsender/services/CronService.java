@@ -35,11 +35,12 @@ public class CronService {
     }
 
     public void editCron(int cronId, String newExpression) {
-        Optional<CronEntity> cronEntity = cronRepository.findById(cronId);
-        if (cronEntity.isPresent()) {
+        Optional<CronEntity> cronEntityById = cronRepository.findById(cronId);
+        if (cronEntityById.isPresent()) {
             if (validCron(newExpression)) {
-                cronEntity.get().setExpression(newExpression);
-                cronRepository.save(cronEntity.get());
+                CronEntity cron = cronEntityById.get();
+                cron.setExpression(newExpression);
+                cronRepository.save(cron);
             } else {
                 throw new RequestException("Expression is not valid");
             }

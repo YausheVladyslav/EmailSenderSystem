@@ -21,9 +21,9 @@ public class UserService {
     private static final int PAGE_SIZE = 5;
 
     public void saveUser(String username, String email) {
-        UserEntity user = new UserEntity();
-        user.setUsername(username);
         if (userRepository.findByEmail(email).isEmpty()) {
+            UserEntity user = new UserEntity();
+            user.setUsername(username);
             user.setEmail(email);
             userRepository.save(user);
         } else {
@@ -31,12 +31,13 @@ public class UserService {
         }
     }
 
-    public void EditUser(long userId, String username, String email) {
-        Optional<UserEntity> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            user.get().setUsername(username);
-            user.get().setEmail(email);
-            userRepository.save(user.get());
+    public void editUser(long userId, String username, String email) {
+        Optional<UserEntity> userById = userRepository.findById(userId);
+        if (userById.isPresent()) {
+            UserEntity user  = userById.get();
+            user.setUsername(username);
+            user.setEmail(email);
+            userRepository.save(user);
         } else {
             throw new RequestException("User by id " + userId + " not found");
         }

@@ -1,6 +1,7 @@
-package com.example.emailsender.scheduler;
+package com.example.emailsender.controllers;
 
 import com.example.emailsender.requests.EditExpressionForSchedulerRequest;
+import com.example.emailsender.services.ScheduleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,21 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ScheduleController {
 
-    private final ScheduleService myCronTrigger;
+    private final ScheduleService scheduleService;
 
-    @PutMapping("/start-thread")
-    public ResponseEntity<String> startThread(
+    @PutMapping("/start-schedule")
+    public ResponseEntity<Void> startCron(
             @Valid @RequestBody EditExpressionForSchedulerRequest request
     ) {
-        myCronTrigger.startSchedule(request.getExpression(), request.getSubject());
-        return ResponseEntity.ok("Thread is started");
+        scheduleService.startSchedule(request.getExpression(), request.getSubject());
+        return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/switch-cron")
-    public ResponseEntity<String> switchCron(
+    @PutMapping("/edit-schedule")
+    public ResponseEntity<Void> edithCron(
             @Valid @RequestBody EditExpressionForSchedulerRequest request
     ) {
-        myCronTrigger.editCron(request.getExpression(), request.getSubject());
-        return ResponseEntity.ok("Works switched cron");
+        scheduleService.editCron(request.getExpression(), request.getSubject());
+        return ResponseEntity.ok().build();
     }
 }
